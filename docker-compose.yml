@@ -1,0 +1,18 @@
+version: "3.2"
+
+services:
+  react:
+    container_name: haeahn-bim-measurement
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # image: haeahn-bim-measurement-react
+    # command: "npm start"
+    ports:
+      - "3003:80"
+    restart: always
+    volumes:
+      - ".:/haeahn-bim-measurement"
+      - "/haeahn-bim-measurement/node_modules"
+    networks:
+      - default
