@@ -5,11 +5,15 @@ import {
   indexAction,
   indexState,
 } from "./indexTypes";
-import { SET_STRING_ARR } from "./indexAction";
+import { GET_TEST_LIST_ERROR, SET_STRING_ARR } from "./indexAction";
 
 import { call, put, takeLatest } from "redux-saga/effects";
 import { getIndexList } from "./indexAPI";
-import { getTestListAsync, GET_TEST_LIST } from "./indexAction";
+import {
+  getTestListAsync,
+  GET_TEST_LIST,
+  GET_TEST_LIST_SUCCESS,
+} from "./indexAction";
 
 function* getTestListSaga(action: ReturnType<typeof getTestListAsync.request>) {
   try {
@@ -29,6 +33,7 @@ export function* indexSaga() {
 
 const initialState = {
   indexStringArrData: [],
+  arrTestList: [],
 };
 
 export const indexReducer = createReducer<indexState, indexAction>(
@@ -37,6 +42,14 @@ export const indexReducer = createReducer<indexState, indexAction>(
     [SET_STRING_ARR]: (state, action) => ({
       ...state,
       indexStringArrData: action.payload,
+    }),
+    [GET_TEST_LIST_SUCCESS]: (state, action: any) => ({
+      ...state,
+      arrTestList: action.payload,
+    }),
+    [GET_TEST_LIST_ERROR]: (state, action: any) => ({
+      ...state,
+      getTestListError: action,
     }),
   }
 );
