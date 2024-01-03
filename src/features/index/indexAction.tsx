@@ -22,3 +22,14 @@ export const getTestListAsync = createAsyncAction(
   GET_TEST_LIST_SUCCESS,
   GET_TEST_LIST_ERROR
 )<GetCheckSessionParamType, GetCheckSessionResponseType, AxiosError>();
+
+export const GET_DATABASE_LIST = "index/GET_DATABASE_LIST" as const;
+export const GET_DATABASE_LIST_SUCCESS =
+  "index/GET_DATABASE_LIST_SUCCESS" as const;
+export const GET_DATABASE_LIST_ERROR = "index/GET_DATABASE_LIST_ERROR" as const;
+
+export const getDatabaseListAsync = createAsyncAction(
+  GET_DATABASE_LIST,
+  GET_DATABASE_LIST_SUCCESS,
+  GET_DATABASE_LIST_ERROR
+)<{}, GetCheckSessionResponseType, AxiosError>();

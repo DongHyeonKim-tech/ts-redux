@@ -3,11 +3,14 @@ import React, { useEffect } from "react";
 import logo from "logo.svg";
 import { RootState } from "app/store";
 import { useSelector, useDispatch } from "react-redux";
-import { getTestListAsync } from "./indexAction";
+import { getDatabaseListAsync, getTestListAsync } from "./indexAction";
 
 const MainIndex = () => {
   const testStringArrData = useSelector(
     (state: RootState) => state.indexReducer.arrTestList
+  );
+  const arrDatabaseList = useSelector(
+    (state: RootState) => state.indexReducer.arrDatabaseList
   );
 
   useEffect(
@@ -15,10 +18,19 @@ const MainIndex = () => {
     [testStringArrData]
   );
 
+  useEffect(
+    () => console.log("arrDatabaseList: ", arrDatabaseList),
+    [arrDatabaseList]
+  );
+
   const dispatch = useDispatch();
   const onGetTestList = (id: string) => {
     // dispatch(getIndexList)
     dispatch(getTestListAsync.request({ id: id }));
+  };
+
+  const onGetDatabaseList = () => {
+    dispatch(getDatabaseListAsync.request({}));
   };
 
   return (
@@ -28,7 +40,8 @@ const MainIndex = () => {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <button onClick={() => onGetTestList("1")}>BUTTON</button>
+        <button onClick={() => onGetTestList("1")}>Test List</button>
+        <button onClick={() => onGetDatabaseList()}>Mongo Database List</button>
         <a
           className="App-link"
           href="https://reactjs.org"

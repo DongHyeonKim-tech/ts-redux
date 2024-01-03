@@ -12,3 +12,12 @@ export const getIndexList = async (info: GetCheckSessionParamType) => {
   return response.data;
   //   return client.get("/assessment/test-list");
 };
+
+export const getMongoDatabaseList = async (params: null) => {
+  const response = await client.get("/level-measurement/list-database-view", {
+    withCredentials: true,
+    timeout: 10000,
+    params: params,
+  });
+  return response.data;
+};

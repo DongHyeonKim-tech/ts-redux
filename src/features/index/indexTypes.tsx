@@ -2,7 +2,11 @@ import { ActionType } from "typesafe-actions";
 
 import * as actions from "./indexAction";
 
-interface Test {
+export interface GetCheckSessionParamType {
+  id: string;
+}
+
+export interface GetCheckSessionResponseType {
   seq: number;
   subject_id: number;
   test_datetime: string;
@@ -24,16 +28,8 @@ interface Test {
 
 export type indexState = {
   indexStringArrData: string[];
-  arrTestList: Test[];
+  arrTestList: GetCheckSessionResponseType[];
+  arrDatabaseList: string[];
 };
 
 export type indexAction = ActionType<typeof actions>;
-
-export interface GetCheckSessionParamType {
-  id: string;
-}
-
-export interface GetCheckSessionResponseType {
-  seq: number;
-  name: string;
-}
