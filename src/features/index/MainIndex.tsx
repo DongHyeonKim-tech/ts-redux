@@ -4,8 +4,11 @@ import logo from "logo.svg";
 import { RootState } from "app/store";
 import { useSelector, useDispatch } from "react-redux";
 import { getDatabaseListAsync, getTestListAsync } from "./indexAction";
+import { useNavigate } from "react-router-dom";
 
 const MainIndex = () => {
+  const navigate = useNavigate();
+
   const testStringArrData = useSelector(
     (state: RootState) => state.indexReducer.arrTestList
   );
@@ -33,6 +36,8 @@ const MainIndex = () => {
     dispatch(getDatabaseListAsync.request({}));
   };
 
+  const onGoSamplePageClick = () => navigate("/sample");
+
   return (
     <div className="App">
       <header className="App-header">
@@ -42,6 +47,7 @@ const MainIndex = () => {
         </p>
         <button onClick={() => onGetTestList("1")}>Test List</button>
         <button onClick={() => onGetDatabaseList()}>Mongo Database List</button>
+        <button onClick={() => onGoSamplePageClick()}>Go Sample Page</button>
         <a
           className="App-link"
           href="https://reactjs.org"
