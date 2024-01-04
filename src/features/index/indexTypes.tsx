@@ -1,5 +1,4 @@
 import { ActionType } from "typesafe-actions";
-
 import * as actions from "./indexAction";
 
 export interface GetCheckSessionParamType {
@@ -27,9 +26,24 @@ export interface GetCheckSessionResponseType {
 }
 
 export type indexState = {
-  indexStringArrData: string[];
-  arrTestList: GetCheckSessionResponseType[];
-  arrDatabaseList: string[];
+  indexStringArrData: {
+    data: any;
+    loading: boolean;
+    error: boolean;
+    errorMessage?: null | string;
+  };
+  arrTestList: {
+    data: any;
+    loading: boolean;
+    error: boolean;
+    errorMessage?: null | string;
+  };
+  arrDatabaseList: {
+    data: any;
+    loading: boolean;
+    error: boolean;
+    errorMessage?: null | string;
+  };
 };
 
 export type indexAction = ActionType<typeof actions>;

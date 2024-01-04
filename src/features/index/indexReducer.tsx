@@ -5,7 +5,7 @@ import {
   indexAction,
   indexState,
 } from "./indexTypes";
-import { GET_TEST_LIST_ERROR, SET_STRING_ARR } from "./indexAction";
+import { GET_TEST_LIST_ERROR } from "./indexAction";
 
 import { call, put, takeLatest } from "redux-saga/effects";
 import { getIndexList, getMongoDatabaseList } from "./indexAPI";
@@ -17,6 +17,7 @@ import {
   GET_DATABASE_LIST,
   GET_DATABASE_LIST_SUCCESS,
 } from "./indexAction";
+import { reducerUtils } from "utils/asyncUtils";
 
 function* getTestListSaga(action: ReturnType<typeof getTestListAsync.request>) {
   try {
@@ -48,21 +49,21 @@ export function* indexSaga() {
 }
 
 const initialState = {
-  indexStringArrData: [],
-  arrTestList: [],
-  arrDatabaseList: [],
+  indexStringArrData: reducerUtils.init(),
+  arrTestList: reducerUtils.init(),
+  arrDatabaseList: reducerUtils.init(),
 };
 
 export const indexReducer = createReducer<indexState, indexAction>(
   initialState,
   {
-    [SET_STRING_ARR]: (state, action) => ({
-      ...state,
-      indexStringArrData: action.payload,
-    }),
+    // [SET_STRING_ARR]: (state, action) => ({
+    //   ...state,
+    //   indexStringArrData: action.payload,
+    // }),
     [GET_TEST_LIST_SUCCESS]: (state, action: any) => ({
       ...state,
-      arrTestList: action.payload,
+      arrTestList: { ...state.arrTestList, data: action.payload },
     }),
     [GET_TEST_LIST_ERROR]: (state, action: any) => ({
       ...state,
