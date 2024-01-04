@@ -25,25 +25,17 @@ export interface GetCheckSessionResponseType {
   created_by: string;
 }
 
+interface ReducerInitType {
+  data: any;
+  loading: boolean;
+  error: boolean;
+  errorMessage?: null | string;
+}
+
 export type indexState = {
-  indexStringArrData: {
-    data: any;
-    loading: boolean;
-    error: boolean;
-    errorMessage?: null | string;
-  };
-  arrTestList: {
-    data: any;
-    loading: boolean;
-    error: boolean;
-    errorMessage?: null | string;
-  };
-  arrDatabaseList: {
-    data: any;
-    loading: boolean;
-    error: boolean;
-    errorMessage?: null | string;
-  };
+  indexStringArrData: ReducerInitType;
+  arrTestList: ReducerInitType;
+  arrDatabaseList: ReducerInitType;
 };
 
 export type indexAction = ActionType<typeof actions>;
