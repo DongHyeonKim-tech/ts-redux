@@ -1,77 +1,50 @@
-import { createReducer } from "typesafe-actions";
-
-import {
-  GetCheckSessionResponseType,
-  indexAction,
-  indexState,
-} from "./indexTypes";
-import { GET_TEST_LIST_ERROR } from "./indexAction";
-
-import { call, put, takeLatest } from "redux-saga/effects";
+import { takeLatest } from "redux-saga/effects";
 import { getIndexList, getMongoDatabaseList } from "./indexAPI";
-import {
-  getTestListAsync,
-  GET_TEST_LIST,
-  GET_TEST_LIST_SUCCESS,
-  getDatabaseListAsync,
+import { GET_TEST_LIST, GET_DATABASE_LIST } from "./indexAction";
+import { createRequestSaga, reducerUtils } from "utils/asyncUtils";
+import { createSlice } from "@reduxjs/toolkit";
+import { createActionState, handleAsyncAction } from "utils/asyncUtils";
+
+const prefix = "index";
+
+const initialState = {
+  getTestList: reducerUtils.init(),
+  getDatabaseList: reducerUtils.init(),
+};
+
+const defaultState = {
+  [GET_TEST_LIST]: "getTestList",
+  [GET_DATABASE_LIST]: "getDatabaseList",
+};
+
+const getTestListSaga = createRequestSaga(GET_TEST_LIST, getIndexList);
+const getDatabaseListSaga = createRequestSaga(
   GET_DATABASE_LIST,
-  GET_DATABASE_LIST_SUCCESS,
-} from "./indexAction";
-import { reducerUtils } from "utils/asyncUtils";
-
-function* getTestListSaga(action: ReturnType<typeof getTestListAsync.request>) {
-  try {
-    const response: GetCheckSessionResponseType = yield call(
-      getIndexList,
-      action.payload
-    );
-    yield put(getTestListAsync.success(response));
-  } catch (error: any) {
-    yield put(getTestListAsync.failure(error));
-  }
-}
-
-function* getDabaseListSaga(action: any) {
-  try {
-    const response: GetCheckSessionResponseType = yield call(
-      getMongoDatabaseList,
-      action.payload
-    );
-    yield put(getDatabaseListAsync.success(response));
-  } catch (error: any) {
-    yield put(getDatabaseListAsync.failure(error));
-  }
-}
+  getMongoDatabaseList
+);
 
 export function* indexSaga() {
   yield takeLatest(GET_TEST_LIST, getTestListSaga);
-  yield takeLatest(GET_DATABASE_LIST, getDabaseListSaga);
+  yield takeLatest(GET_DATABASE_LIST, getDatabaseListSaga);
 }
 
-const initialState = {
-  indexStringArrData: reducerUtils.init(),
-  arrTestList: reducerUtils.init(),
-  arrDatabaseList: reducerUtils.init(),
-};
-
-export const indexReducer = createReducer<indexState, indexAction>(
+export const indexSlice = createSlice({
+  name: prefix,
   initialState,
-  {
-    // [SET_STRING_ARR]: (state, action) => ({
-    //   ...state,
-    //   indexStringArrData: action.payload,
-    // }),
-    [GET_TEST_LIST_SUCCESS]: (state, action: any) => ({
-      ...state,
-      arrTestList: { ...state.arrTestList, data: action.payload },
-    }),
-    [GET_TEST_LIST_ERROR]: (state, action: any) => ({
-      ...state,
-      getTestListError: action,
-    }),
-    [GET_DATABASE_LIST_SUCCESS]: (state, action: any) => ({
-      ...state,
-      arrDatabaseList: action.payload,
-    }),
-  }
-);
+  reducers: {
+    getTestList: (state, action) => {},
+    getDatabaseList: (state, action) => {},
+  },
+  // 서버통신 reducer
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      (action) => {
+        return action.type.includes(prefix);
+      },
+      (state: any, action) => {
+        state[createActionState(action, defaultState)] =
+          handleAsyncAction(action); // 변경 사항
+      }
+    );
+  },
+});

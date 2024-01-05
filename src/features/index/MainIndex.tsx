@@ -10,10 +10,10 @@ const MainIndex = () => {
   const navigate = useNavigate();
 
   const testStringArrData = useSelector(
-    (state: RootState) => state.indexReducer.arrTestList
+    (state: RootState) => state.indexReducer.getTestList
   );
   const arrDatabaseList = useSelector(
-    (state: RootState) => state.indexReducer.arrDatabaseList
+    (state: RootState) => state.indexReducer.getDatabaseList
   );
 
   useEffect(

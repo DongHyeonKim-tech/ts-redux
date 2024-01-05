@@ -1,12 +1,12 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { all } from "redux-saga/effects";
-import { indexReducer, indexSaga } from "features/index/indexReducer";
+import { indexSlice, indexSaga } from "features/index/indexReducer";
 
 import createSagaMiddleware from "redux-saga";
 
 const sagaMiddleware = createSagaMiddleware();
 
-const rootReducer = combineReducers({ indexReducer });
+const rootReducer = combineReducers({ indexReducer: indexSlice.reducer });
 
 function* rootSaga() {
   yield all([indexSaga()]);

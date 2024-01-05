@@ -4,7 +4,7 @@ import { RootState } from "app/store";
 
 const MainSample = () => {
   const arrDatabaseList = useSelector(
-    (state: RootState) => state.indexReducer.arrDatabaseList
+    (state: RootState) => state.indexReducer.getDatabaseList
   );
 
   const onCheckDatabaseList = () =>

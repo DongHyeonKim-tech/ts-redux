@@ -1,7 +1,7 @@
 import { ActionType } from "typesafe-actions";
 import * as actions from "./indexAction";
 
-export interface GetCheckSessionParamType {
+export interface GetTestListParamType {
   id: string;
 }
 
@@ -24,18 +24,5 @@ export interface GetCheckSessionResponseType {
   created_on: string;
   created_by: string;
 }
-
-interface ReducerInitType {
-  data: any;
-  loading: boolean;
-  error: boolean;
-  errorMessage?: null | string;
-}
-
-export type indexState = {
-  indexStringArrData: ReducerInitType;
-  arrTestList: ReducerInitType;
-  arrDatabaseList: ReducerInitType;
-};
 
 export type indexAction = ActionType<typeof actions>;

@@ -1,10 +1,10 @@
 import client from "api/client";
 import {
-  GetCheckSessionParamType,
+  GetTestListParamType,
   GetCheckSessionResponseType,
 } from "./indexTypes";
 
-export const getIndexList = async (info: GetCheckSessionParamType) => {
+export const getIndexList = async (info: GetTestListParamType) => {
   const response = await client.get<GetCheckSessionResponseType>(
     "/assessment/test-list",
     { withCredentials: true, timeout: 10000, params: { id: info.id } }
